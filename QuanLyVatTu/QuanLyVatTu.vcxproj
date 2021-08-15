@@ -152,11 +152,9 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Employee.txt" />
-    <Text Include="Invoice.txt" />
-    <Text Include="InvoiceDetail.txt" />
-    <Text Include="Product.txt" />
-    <Text Include="text.txt" />
+    <Text Include="Employee3.txt" />
+    <Text Include="Invoice3.txt" />
+    <Text Include="InvoiceDetail3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
