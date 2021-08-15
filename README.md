@@ -1,4 +1,7 @@
 # QuanLyVatTu
+
+Đề tài: Quản Lý Vật Tư
+
 Đồ án cấu trúc dữ liệu thầy Lưu Nguyễn Kỳ Thư Học viện Bưu chính Viễn Thông
 
 Thực hiện bởi Lưu Tiến Phát
