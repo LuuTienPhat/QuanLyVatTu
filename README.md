@@ -53,8 +53,8 @@ Email: **luutienphat@gmail.com**
   
    e. **Lập hóa đơn nhập/Lập hóa đơn xuất**: nhập vào số hóa đơn, ngày lập, loại (chỉ nhận ký tự N hoặc X). Sau đó, tiếp tục cho phép nhập các vật tư của hóa đơn đó; Căn cứ vào          loại hóa đơn, chương trình sẽ tự động cập nhật số lượng tồn.
    
-         Lưu ý: - Nếu số lượng xuất không đủ hàng thì báo lỗi và in ra số lượng tồn hiện có trong kho;
-                - Chỉ được phép xóa vật tư đang lập của hóa đơn hiện tại. Khi hóa đơn đã ghi thì không được xóa các vật tư trong hóa đơn
+    Lưu ý: - Nếu số lượng xuất không đủ hàng thì báo lỗi và in ra số lượng tồn hiện có trong kho;
+           - Chỉ được phép xóa vật tư đang lập của hóa đơn hiện tại. Khi hóa đơn đã ghi thì không được xóa các vật tư trong hóa đơn
                        
    f. **In hóa đơn** : In hóa đơn dựa vào số hóa đơn do ta nhập vào
    
