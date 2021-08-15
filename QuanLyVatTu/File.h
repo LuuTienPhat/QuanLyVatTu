@@ -9,11 +9,11 @@ using namespace std;
 //=================== GHI FILE NHAN VIEN ===================
 void writeEmployeeFile(EmployeeList& employeeList) {
 	fstream fileEmployeeOut;
-	fileEmployeeOut.open("Employee3.txt", ios_base::out);
+	fileEmployeeOut.open("EmployeeList.txt", ios_base::out);
 	fstream fileInvoiceOut;
-	fileInvoiceOut.open("Invoice3.txt", ios_base::out);
+	fileInvoiceOut.open("InvoiceList.txt", ios_base::out);
 	fstream fileInvoiceDetailOut;
-	fileInvoiceDetailOut.open("InvoiceDetail3.txt", ios_base::out);
+	fileInvoiceDetailOut.open("InvoiceDetailList.txt", ios_base::out);
 
 	int fileInvoicePointer = 0;
 	int fileInvoiceDetailPointer = 0;
@@ -71,7 +71,7 @@ void writeEmployeeFile(EmployeeList& employeeList) {
 //=================== GHI FILE NHAN VIEN KHONG GHI CAC FILE TRONG NO ===================
 void writeOnlyEmployeeFile(EmployeeList& employeeList) {
 	fstream fileEmployeeOut;
-	fileEmployeeOut.open("Employee3.txt", ios_base::out);
+	fileEmployeeOut.open("EmployeeList.txt", ios_base::out);
 
 	if (fileEmployeeOut.fail()) return;
 	for (int i = 0; i < employeeList.number; i++) {
@@ -157,13 +157,13 @@ void readInvoiceFile(Employee& employee, ifstream& fileInvoiceIn, ifstream& file
 //=================== DOC FILE NHAN VIEN ===================
 void readEmployeeFile(EmployeeList& employeelist) {
 	ifstream fileIn;
-	fileIn.open("Employee3.txt", ios_base::in);
+	fileIn.open("EmployeeList.txt", ios_base::in);
 
 	ifstream fileInvoiceIn;
-	fileInvoiceIn.open("Invoice3.txt", ios_base::in);
+	fileInvoiceIn.open("InvoiceList.txt", ios_base::in);
 
 	ifstream fileInvoiceDetailIn;
-	fileInvoiceDetailIn.open("InvoiceDetail3.txt", ios_base::in);
+	fileInvoiceDetailIn.open("InvoiceDetailList.txt", ios_base::in);
 
 	int fileInvoicePointer = 0;
 	int fileInvoiceDetailPointer = 0;
@@ -202,7 +202,7 @@ void readEmployeeFile(EmployeeList& employeelist) {
 void readProductFile(ProductList& productList)
 {
 	fstream FileIn;
-	FileIn.open("Product2.txt", ios_base::in);
+	FileIn.open("ProductList.txt", ios_base::in);
 	if (FileIn.fail()) return;
 	if (FileIn.peek() == fstream::traits_type::eof()) {
 		return;
@@ -250,7 +250,7 @@ void writeProductFileNLR(ProductList& root, fstream& productFileOut) {
 
 void writeProductFile(ProductList& root) {
 	fstream productFileOut;
-	productFileOut.open("Product2.txt", ios_base::out);
+	productFileOut.open("ProductList.txt", ios_base::out);
 	if (productFileOut.fail()) return;
 
 	writeProductFileNLR(root, productFileOut);

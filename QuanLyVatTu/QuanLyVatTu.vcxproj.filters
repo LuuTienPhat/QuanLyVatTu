@@ -46,13 +46,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Employee3.txt">
+    <Text Include="EmployeeList.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Invoice3.txt">
+    <Text Include="InvoiceList.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="InvoiceDetail3.txt">
+    <Text Include="InvoiceDetailList.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="ProductList.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
