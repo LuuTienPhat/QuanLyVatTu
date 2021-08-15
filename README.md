@@ -1,9 +1,15 @@
-# QuanLyVatTu
+# Quản Lý Vật Tư
 
-Đề tài: Quản Lý Vật Tư
+Giảng viên: **Lưu Nguyễn Kỳ Thư**
 
-Đồ án cấu trúc dữ liệu thầy Lưu Nguyễn Kỳ Thư Học viện Bưu chính Viễn Thông
+Thực hiện: **Lưu Tiến Phát**
 
-Thực hiện bởi Lưu Tiến Phát
+**08/2021**
 
-08/2021
+## Images
+
+1. Trang Menu
+![Menu_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Menu-Page.png?raw=true)
+
+https://github.com/luutienphat/QuanLyVatTu.git
+
