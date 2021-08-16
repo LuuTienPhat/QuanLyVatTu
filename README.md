@@ -30,7 +30,7 @@ Email: **luutienphat@gmail.com**
 
   ![Show_Invoice_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Show-Invoice-Page.png?raw=true)
 
-## Đề tài
+## Đề bài
 
   Quản lý nhập xuất vật tư: Ta tổ chức các danh sách sau:
   
