@@ -1,16 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <conio.h>
-#include <stdio.h>
 #include "Struct.h"
-#include "mylib.h"
 #include <cctype>
-#include <cstdlib>
 #include <ctime>
-#include "Product.h"
 #include "Windows.h"
-#include <sstream>
 using namespace std;
 
 //KIEM TRA NAM NHUAN
