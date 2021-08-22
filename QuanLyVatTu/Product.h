@@ -19,6 +19,8 @@ bool is_number(string s)
 			return false;
 		}
 	}
+
+	return true;
 }
 
 //==================== QUAN LY VAT TU ====================
