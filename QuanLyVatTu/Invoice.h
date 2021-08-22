@@ -145,7 +145,7 @@ void newInvoice(Invoice& invoice, string invoiceNumber, Date& date, string Emplo
 	initInvoiceDetailList(invoice.invoiceDetailList);
 }
 
-//Tim kiem node hoa don trong danh sach hoa don
+//TIM KIEM NODE HOA DON
 NodeInvoice* searchInvoiceList(InvoiceList& first, string invoiceId) {
 	if (isInvoiceListEmpty(first)) return NULL;
 
@@ -187,40 +187,10 @@ int countInvoice(InvoiceList& first) {
 	return count;
 }
 
-//Xoa tat ca cac truong hop trong danh sach hoa don
-void deleteInvoiceFromList(InvoiceList& first, string invoiceNumber) {
-	if (isInvoiceListEmpty(first)) return;
-
-	if (first->invoice.invoiceNumber.compare(invoiceNumber) == 0) {
-		NodeInvoice* p = first;    // nut can xoa la nut dau
-		first = p->pNext;
-		delete p;
-		return;
-	}
-
-	NodeInvoice* q = nullptr;
-	NodeInvoice* p = nullptr; //node dung truoc node q;
-	for (q = first; q != NULL; q = q->pNext) {
-		if (q->invoice.invoiceNumber.compare(invoiceNumber) == 0) {
-			break;
-		}
-		p = q;
-	}
-
-	if (q != nullptr) { 
-		if (q->pNext != NULL) { //DELETE AFTER
-			p->pNext = q->pNext;
-		}
-		else { //DELETE LAST
-			p->pNext = NULL;
-		}
-		delete q;
-	}
-}
 
 //==================== KIEM TRA DU LIEU NHAP VAO ====================
 
-//Kiem tra so hoa don co trung khong
+//KIEM TRA SO HOA DON CO TRUNG KHONG
 string checkInvoiceNumber(EmployeeList& emloyeeList, string& invoiceNumber, string& employeeId) {
 	if (invoiceNumber.empty()) return "SO HOA DON khong duoc de trong";
 	if (invoiceNumber.length() > 20) return "SO HOA DON toi da 20 ki tu";
@@ -234,7 +204,7 @@ string checkInvoiceNumber(EmployeeList& emloyeeList, string& invoiceNumber, stri
 	return "";
 }
 
-//Kiem tra loai hoa don la 'X' hay 'N'
+//KIEM TRA LOAI HOA DON LA 'X' HAY 'N'
 string checkType(string type) {
 	string import1 = "N";
 	string export1 = "X";
@@ -242,67 +212,4 @@ string checkType(string type) {
 	if (type.compare(import1) != 0 && type.compare(export1) != 0)
 		return "LOAI HOA DON la 'N' hoac 'X'";
 	return "";
-}
-
-
-
-
-
-
-
-
-
-
-
-//Them vao dau danh sach hoa don
-void insertFirst(InvoiceList& first, Invoice& invoice) {
-	NodeInvoice* p;
-	p = new NodeInvoice;
-	p->invoice = invoice;
-	p->pNext = first;
-	first = p;
-}
-
-//Them vao cuoi danh sach hoa don
-void insertLast(InvoiceList& last, Invoice& invoice) {
-	NodeInvoice* p;
-	p = new NodeInvoice;
-	p->invoice = invoice;
-	last->pNext = p;
-	last = p;
-}
-
-//Them co thu tu trong danh sach hoa don
-void insertOrder(InvoiceList& first, Invoice& invoice) {
-	if (first == NULL) {  // Insert First
-		insertFirst(first, invoice);
-		return;
-	}
-
-	NodeInvoice* k = new NodeInvoice;
-	k = first;
-	for (NodeInvoice* p = k; p != NULL; p = p->pNext) {
-		if (invoice.invoiceNumber.compare(p->invoice.invoiceNumber) < 0) {
-			break;
-		}
-	}
-
-	if (k == first) {
-		insertFirst(first, invoice);
-		return;
-	}
-
-	NodeInvoice* q;
-	q = new NodeInvoice;
-	q->invoice = invoice;
-	q->pNext = k->pNext;
-	k->pNext = q;
-}
-
-//Xoa phan tu dau trong danh sach hoa don
-void deleteFirst(InvoiceList& first) {
-	if (isInvoiceListEmpty(first)) return;
-	NodeInvoice* p = first;    // nut can xoa la nut dau
-	first = p->pNext;
-	delete p;
 }
