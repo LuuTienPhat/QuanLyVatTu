@@ -3750,11 +3750,11 @@ void statPopUp(EmployeeList& employeeList) {
 	int widthInput = 36;
 	const int number = 2;
 
-	string startDateString = "01/01/2021";
-	string endDateString = "31/12/2021";
+	/*string startDateString = "01/01/2021";
+	string endDateString = "31/12/2021";*/
 
-	/*string startDateString = "";
-	string endDateString = "";*/
+	string startDateString = "";
+	string endDateString = "";
 
 	string title[number] = { "NGAY BAT DAU", "NGAY KET THUC" };
 
