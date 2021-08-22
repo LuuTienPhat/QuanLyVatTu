@@ -3719,9 +3719,10 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 	int iOld = i;
 	bool isLeftRight = true;
 	bool isFromUp = false;
+	bool isInit = true;
 
 	while (true) {
-		if (isLeftRight) {
+		if (isInit) {
 			setTextColor(COLOR_BRIGHT_WHITE);
 			setBackgroundColor(COLOR_BLACK);
 			int iy = y + 3;
@@ -3734,9 +3735,14 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 				}
 				iy = iy + 2;
 			}
+			isInit = false;
+		}
 
-			if (statList.number != 0)
-			{
+		if (statList.number != 0)
+		{
+
+			if (isLeftRight) {
+
 				int ix;
 				iy = y + 3;
 				for (int k = currentIndex; k < row + currentIndex; k++) {
@@ -3773,13 +3779,6 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 			iOld = i;
 			yPointer = y + 3;
 			yPointerOld = yPointer;
-			if (isFromUp) {
-				yPointer = y + 3 + 2 * (row - 1);
-				yPointerOld = yPointer;
-				i = row - 1;
-				iOld = i;
-				isFromUp = false;
-			}
 			isLeftRight = false;
 		}
 
@@ -4048,65 +4047,33 @@ int salesTable(ProductList& productList, SalesList& salesList, Date& fromDate, D
 
 	int xPointer = x + 1;
 	int yPointer = y + 3;
-	int xPointerOld = xPointer;
-	int yPointerOld = yPointer;
-	int i = 0;
-	int iOld = i;
-	bool isLeftRight = true;
-	bool isFromUp = false;
 
 	while (true) {
-		if (isLeftRight) {
+		if (salesList.number != 0)
+		{
 			setTextColor(COLOR_BRIGHT_WHITE);
 			setBackgroundColor(COLOR_BLACK);
-			int iy = y + 3;
+			int ix;
+			iy = y + 3;
 			for (int k = 0; k < row; k++) {
-				int ix = xPointer;
-				for (int j = 0; j < column; j++) {
-					gotoXY(ix, iy);
-					cout << generateSpace(cellWidth[j]);
-					ix += cellWidth[j];
+				if (k >= salesList.number) break;
+				else {
+					ix = xPointer;
+
+					coutBox(ix, iy, cellWidth[0], TEXT_RIGHT, to_string(k + 1));
+					ix += cellWidth[0];
+
+					coutBox(ix, iy, cellWidth[1], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productId);
+					ix += cellWidth[1];
+
+					coutBox(ix, iy, cellWidth[2], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productName);
+					ix += cellWidth[2];
+
+					coutBox(ix, iy, cellWidth[3], TEXT_RIGHT, doubleToCurrency(salesList.nodes[k].money));
+					ix += cellWidth[3];
 				}
 				iy = iy + 2;
 			}
-
-			if (salesList.number != 0)
-			{
-				int ix;
-				iy = y + 3;
-				for (int k = 0; k < row; k++) {
-					if (k >= salesList.number) break;
-					else {
-						ix = xPointer;
-
-						coutBox(ix, iy, cellWidth[0], TEXT_RIGHT, to_string(k + 1));
-						ix += cellWidth[0];
-
-						coutBox(ix, iy, cellWidth[1], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productId);
-						ix += cellWidth[1];
-
-						coutBox(ix, iy, cellWidth[2], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productName);
-						ix += cellWidth[2];
-
-						coutBox(ix, iy, cellWidth[3], TEXT_RIGHT, doubleToCurrency(salesList.nodes[k].money));
-						ix += cellWidth[3];
-					}
-					iy = iy + 2;
-				}
-			}
-
-			i = 0;
-			iOld = i;
-			yPointer = y + 3;
-			yPointerOld = yPointer;
-			if (isFromUp) {
-				yPointer = y + 3 + 2 * (row - 1);
-				yPointerOld = yPointer;
-				i = row - 1;
-				iOld = i;
-				isFromUp = false;
-			}
-			isLeftRight = false;
 		}
 
 		char key = _getch();
