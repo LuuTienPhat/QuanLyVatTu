@@ -481,7 +481,7 @@ int warningPopUp(string message) {
 			key = char();
 			break;
 		}
-			
+
 		case ESC:
 		{
 			return NO;
