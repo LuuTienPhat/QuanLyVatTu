@@ -257,7 +257,9 @@ StatList makeStatList(EmployeeList& employeeList, Date& fromDate, Date& toDate) 
 					statList2.init = statList.init;
 					statList2.nodes = new Stat[statList.number];
 					for (int m = 0; m < statList.number; m++) {
-						statList2.nodes[m] = statList.nodes[m];
+						statList2.nodes[m].nodeInvoice = statList.nodes[m].nodeInvoice;
+						statList2.nodes[m].money = statList.nodes[m].money;
+						statList2.nodes[m].index = statList.nodes[m].index;
 						statList2.number++;
 					}
 					delete[] statList.nodes;
@@ -266,7 +268,9 @@ StatList makeStatList(EmployeeList& employeeList, Date& fromDate, Date& toDate) 
 					statList.init = statList2.init + 100;
 					statList.nodes = new Stat[statList.init];
 					for (int m = 0; m < statList2.number; m++) {
-						statList.nodes[m] = statList2.nodes[m];
+						statList.nodes[m].nodeInvoice = statList2.nodes[m].nodeInvoice;
+						statList.nodes[m].index = statList2.nodes[m].index;
+						statList.nodes[m].money = statList2.nodes[m].money;
 						statList.number++;
 					}
 					delete[] statList2.nodes;
