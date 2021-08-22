@@ -165,7 +165,7 @@ struct StatList {
 
 //==================== THONG KE TOP DOANH THU ====================
 struct Sales {
-	string productId; //ma vat tu
+	NodeProduct* nodeProduct; //node vat tu
 	double money = 0; //doanh thu vat tu do
 };
 
