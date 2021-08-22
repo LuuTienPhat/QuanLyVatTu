@@ -1995,7 +1995,7 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 
 
 
-//=================== XUAT DANH SACH NHAN VIEN THEO TEN ===================
+//=================== CHON NHAN VIEN THEO TEN DE LAP HO DON ===================
 int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeList, bool isSearch) {
 	ShowCur(0);
 	titleBox(1, 3, "CHON NHAN VIEN LAP HOA DON");
@@ -2253,111 +2253,6 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 	}
 
 }
-
-//=================== XUAT DANH SACH VAT TU THEO TEN ===================
-void productTableByName(ProductList& root, NodeIndexList& nodeIndexList) {
-	ShowCur(0);
-	titleBox(1, 3, "DANH SACH VAT TU THEO TEN");
-	int width = 20;
-	int height = 2;
-	int x = getCenterX(WIDTH_MAIN_FRAME, width * 6);
-	int y = getCenterY(HEIGHT_MAIN_FRAME, height * 14);
-	int backgroundColor = COLOR_BRIGHT_WHITE;
-	int textColor = COLOR_RED;
-	setBackgroundColor(0);
-	setTextColor(COLOR_WHITE);
-
-	int currentIndex = 0;
-	int row = 12;
-	const int column = 5;
-	string title[column] = { "STT", "MA VAT TU", "TEN VAT TU", "DON VI TINH", "SO LUONG" };
-	int cellWidth[column] = { 10, 30, 40, 20, 20 };
-
-	int iy = y + 2;
-	for (int k = currentIndex; k < row; k++) {
-		int ix = x;
-		for (int j = 0; j < column; j++) {
-			box3(ix, iy, cellWidth[j], height, backgroundColor, textColor, "");
-			ix += cellWidth[j];
-		}
-		iy = iy + 2;
-	}
-	tableHeader(x, y, cellWidth, column, backgroundColor, textColor, title);
-	tableFooter(x, iy + 1, cellWidth, column, backgroundColor, textColor, "");
-	int keyBoxWidth = hotKeyBox(x + 1, iy + 2, "ESC", "QUAY LAI"); keyBoxWidth += 5;
-	keyBoxWidth += hotKeyBox(x + keyBoxWidth, iy + 2, "LEFT/RIGHT", "SANG TRANG"); keyBoxWidth += 5;
-
-	bool isRightLeft = true;
-	bool isInit = true;
-
-	while (true) {
-		if (isRightLeft) {
-			if (!isInit) {
-				int iy = y + 3;
-				for (int k = currentIndex; k < row + currentIndex; k++) {
-					int ix = x + 1;
-					for (int j = 0; j < column; j++) {
-						gotoXY(ix, iy);
-						cout << generateSpace(cellWidth[j]);
-						ix += cellWidth[j];
-					}
-					iy = iy + 2;
-				}
-			}
-
-			int ix;
-			int iy = y + 3;
-			setTextColor(COLOR_BRIGHT_WHITE);
-			for (int k = currentIndex; k < row + currentIndex; k++) {
-				if (k >= nodeIndexList.number) {
-					ix = x + 1;
-					for (int j = 0; j < column; j++) {
-						gotoXY(ix, iy);
-						cout << "";
-						ix += cellWidth[j];
-					}
-				}
-				else {
-					ix = x + 1;
-					gotoXY(ix, iy); cout << intToString(k + 1); ix += cellWidth[0];
-					gotoXY(ix, iy); cout << nodeIndexList.nodes[k].nodeProduct->product.productId; ix += cellWidth[1];
-					gotoXY(ix, iy); cout << nodeIndexList.nodes[k].nodeProduct->product.productName; ix += cellWidth[2];
-					gotoXY(ix, iy); cout << nodeIndexList.nodes[k].nodeProduct->product.unit; ix += cellWidth[3];
-					gotoXY(ix, iy); cout << nodeIndexList.nodes[k].nodeProduct->product.quantity; ix += cellWidth[4];
-				}
-				iy = iy + 2;
-			}
-
-			isInit = false;
-			isRightLeft = false;
-		}
-
-		char key = _getch();
-		if (key == ESC)
-		{
-			clearConsole();
-			menu(false);
-		}
-		else if (key == -32)
-		{
-
-			key = _getch();
-			if (key == LEFT && currentIndex != 0)
-			{
-				currentIndex -= row;
-				isRightLeft = true;
-			}
-			else if (key == RIGHT && (currentIndex + row) <= nodeIndexList.number)
-			{
-				currentIndex += row;
-				isRightLeft = true;
-			}
-			if (key == UP || key == DOWN) {}
-		}
-	}
-}
-
-
 
 //=================== TAO HOA DON MOI ===================
 void addInvoicePopUp(ProductList& productList, EmployeeList& employeeList, int employeeIndex) {

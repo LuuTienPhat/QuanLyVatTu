@@ -117,7 +117,7 @@ string checkVAT(string VAT) {
 			return "VAT phai la so";
 		}
 	}*/
-	int num = stof(VAT);
+	float num = stof(VAT);
 	if (num < 0) return "VAT >= 0";
 	return "";
 }
@@ -157,7 +157,7 @@ NodeInvoice* searchInvoiceList(InvoiceList& first, string invoiceId) {
 	return NULL;
 }
 
-//Them tat ca cac truong hop trong danh sach hoa don
+//THEM HOA DON VAO DANH SACH HOA DON
 void insertInvoice(InvoiceList& first, Invoice& invoice)
 {
 	NodeInvoice* p = new NodeInvoice;
