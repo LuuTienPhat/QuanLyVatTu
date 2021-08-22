@@ -2210,6 +2210,9 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 				sortEmployeeListByName(sortedEmployeeList);
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isSearch = false;
 				isInit = true;
 				isLeftRight = true;
@@ -2249,6 +2252,9 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 				searchEmployeeListByName(employeeList, sortedEmployeeList, name);
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isInit = true;
 				isLeftRight = true;
 				isUpDown = true;
@@ -3142,6 +3148,9 @@ void invoiceDetailListTable(EmployeeList& employeeList, int employeeIndex, Produ
 				sortProductListByName(sortedProductList);
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isSearch = false;
 				isInit = true;
 				isLeftRight = true;
@@ -3208,9 +3217,12 @@ void invoiceDetailListTable(EmployeeList& employeeList, int employeeIndex, Produ
 
 			if (c == ENTER) {
 				delete[] sortedProductList.nodes;
-				searchProductListByName(productList, sortedProductList, productName);
+				searchProductListByName(productList, sortedProductList, trim(productName));
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isSearch = true;
 				isInit = true;
 				isLeftRight = true;
