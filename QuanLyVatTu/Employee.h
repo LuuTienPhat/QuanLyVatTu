@@ -167,6 +167,7 @@ string checkGender(string gender) {
 
 //==================== DANH SACH NHAN VIEN THEO TEN ====================
 
+//KIEM TRA XEM DANH SACH NHAN VIEN THEO CO RONG KHONG
 bool isSortedEmployeeListEmpty(IndexList& sortedEmployeeList) {
 	return sortedEmployeeList.number == 0 ? true : false;
 }
@@ -177,7 +178,8 @@ void sortEmployeeListByName(IndexList& sortedEmployeeList)
 	int i, j;
 	for (i = 0; i < sortedEmployeeList.number - 1; i++) {
 		for (j = 0; j < sortedEmployeeList.number - i - 1; j++) {
-			if (sortedEmployeeList.nodes[j].firstname.compare(sortedEmployeeList.nodes[j + 1].firstname) > 0) {
+			//OLD CODE
+			/*if (sortedEmployeeList.nodes[j].firstname.compare(sortedEmployeeList.nodes[j + 1].firstname) > 0) {
 				swap(sortedEmployeeList.nodes[j], sortedEmployeeList.nodes[j + 1]);
 			}
 			else if (sortedEmployeeList.nodes[j].firstname.compare(sortedEmployeeList.nodes[j + 1].firstname) == 0) {
@@ -189,7 +191,13 @@ void sortEmployeeListByName(IndexList& sortedEmployeeList)
 						swap(sortedEmployeeList.nodes[j], sortedEmployeeList.nodes[j + 1]);
 					}
 				}
-			}
+			}*/
+
+			//CODE THAY DOI THEO THAY GOP Y
+			string employee1 = sortedEmployeeList.nodes[j].firstname + sortedEmployeeList.nodes[j].lastname + to_string(sortedEmployeeList.nodes[j].index);
+			string employee2 = sortedEmployeeList.nodes[j + 1].firstname + sortedEmployeeList.nodes[j + 1].lastname + to_string(sortedEmployeeList.nodes[j + 1].index);
+
+			if (employee1.compare(employee2) > 0) swap(sortedEmployeeList.nodes[j], sortedEmployeeList.nodes[j + 1]);
 		}
 	}
 }

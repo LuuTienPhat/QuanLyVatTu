@@ -4109,10 +4109,6 @@ int salesTable(ProductList& productList, SalesList& salesList, Date& fromDate, D
 		{
 		case -32:
 		{
-			if (key == LEFT) {}
-			else if (key == RIGHT) {}
-			else if (key == UP) {}
-			else if (key == DOWN) {}
 			break;
 		}
 		case ESC:
