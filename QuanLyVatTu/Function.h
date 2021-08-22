@@ -1995,7 +1995,7 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 
 
 
-//=================== CHON NHAN VIEN THEO TEN DE LAP HO DON ===================
+//=================== CHON NHAN VIEN THEO TEN DE LAP HOA DON ===================
 int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeList, bool isSearch) {
 	ShowCur(0);
 	titleBox(1, 3, "CHON NHAN VIEN LAP HOA DON");
@@ -2078,9 +2078,14 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 						coutBox(ix, iy, cellWidth[0], TEXT_RIGHT, to_string(k + 1));
 						ix += cellWidth[0];
 
-						gotoXY(ix, iy); cout << employeeList.employee[index]->employeeId; ix += cellWidth[1];
-						gotoXY(ix, iy); cout << sortedEmployeeList.nodes[k].lastname; ix += cellWidth[2];
-						gotoXY(ix, iy); cout << sortedEmployeeList.nodes[k].firstname; ix += cellWidth[3];
+						coutBox(ix, iy, cellWidth[1], TEXT_LEFT, employeeList.employee[index]->employeeId);
+						ix += cellWidth[1];
+
+						coutBox(ix, iy, cellWidth[2], TEXT_LEFT, sortedEmployeeList.nodes[k].lastname);
+						ix += cellWidth[2];
+
+						coutBox(ix, iy, cellWidth[3], TEXT_LEFT, sortedEmployeeList.nodes[k].firstname);
+						ix += cellWidth[3];
 					}
 					iy = iy + 2;
 				}
@@ -2106,13 +2111,13 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 			}
 
 			if (isUpDown) {
-				gotoXY(xPointerOld + cellWidth[0], yPointerOld);
+				gotoXY(xPointerOld + cellWidth[0] + 1, yPointerOld);
 				setBackgroundColor(COLOR_BLACK);
 				setTextColor(COLOR_BRIGHT_WHITE);
 				int index = sortedEmployeeList.nodes[iOld + currentIndex].index;
 				cout << employeeList.employee[index]->employeeId;
 
-				gotoXY(xPointer + cellWidth[0], yPointer);
+				gotoXY(xPointer + cellWidth[0] + 1, yPointer);
 				setBackgroundColor(COLOR_RED);
 				setTextColor(COLOR_LIGHT_YELLOW);
 				index = sortedEmployeeList.nodes[i + currentIndex].index;
@@ -2200,12 +2205,13 @@ int employeeTableByName(EmployeeList& employeeList, IndexList& sortedEmployeeLis
 			}
 			else {
 				delete[] sortedEmployeeList.nodes;
-				return -1;
+				return NO;
 			}
 			break;
 		}
 
-		case ENTER: {
+		case ENTER:
+		{
 			if (!isSortedEmployeeListEmpty(sortedEmployeeList)) {
 				int index = sortedEmployeeList.nodes[i + currentIndex].index;
 				delete[] sortedEmployeeList.nodes;
@@ -2324,7 +2330,7 @@ void addInvoicePopUp(ProductList& productList, EmployeeList& employeeList, int e
 		if (i == 4) c = _getch();
 		switch (c)
 		{
-		case -32:
+		case -32: //DIEU HUONG
 		{
 			isClicked = true;
 			c = _getch();
@@ -2343,7 +2349,7 @@ void addInvoicePopUp(ProductList& productList, EmployeeList& employeeList, int e
 			break;
 		}
 
-		case ESC:
+		case ESC: //NHAN ESC
 		{
 			setBackgroundColor(COLOR_BLACK);
 			clearConsole();
@@ -2351,19 +2357,21 @@ void addInvoicePopUp(ProductList& productList, EmployeeList& employeeList, int e
 			break;
 		}
 
-		case F4:
+		case F4: //CHON NHAN VIEN
 		{
 			IndexList sortedEmployeeList;
 			employeeListToEmployeeIndexList(employeeList, sortedEmployeeList);
 			sortEmployeeListByName(sortedEmployeeList);
 			clearConsole();
+
 			employeeIndex = employeeTableByName(employeeList, sortedEmployeeList, false);
+			
 			clearConsole();
 			addInvoicePopUp(productList, employeeList, employeeIndex);
 			break;
 		}
 
-		case ENTER:
+		case ENTER: //NHAN OK
 		{
 			if (i == number) {
 				box(xPointer, y + height - 6, widthInput, 5, COLOR_RED, COLOR_LIGHT_YELLOW, "", TEXT_CENTER);
@@ -3336,10 +3344,6 @@ int showInvoice(ProductList& productList, Employee& employee, Invoice& invoice) 
 
 	int xPointer = x + 1;
 	int yPointer = iyText + 3;
-	int xPointerOld = xPointer;
-	int yPointerOld = yPointer;
-	int i = 0;
-	int iOld = i;
 	bool isInit = true;
 	InvoiceDetailList invoiceDetailList = invoice.invoiceDetailList;
 
@@ -3406,13 +3410,12 @@ int showInvoice(ProductList& productList, Employee& employee, Invoice& invoice) 
 			cout << "Bang chu: " + DocTienBangChu(totalMoney, "dong");
 		}
 
-
 		char key = _getch();
 		switch (key)
 		{
 		case ESC:
 		{
-			return 1;
+			return NO;
 			break;
 		}
 		default:
@@ -3540,7 +3543,7 @@ void invoicePopUp(ProductList& productList, EmployeeList& employeeList) {
 				if (e.empty()) {
 					clearConsole();
 					int k = showInvoice(productList, *employeeList.employee[employeeIndex], p->invoice);
-					if (k >= 0) {
+					if (k == NO) {
 						clearConsole();
 						invoicePopUp(productList, employeeList);
 					}
