@@ -1307,11 +1307,13 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 
 			if (c == ENTER) //NHAN ENTER DE TIM KIEM
 			{
-				delete[] sortedProductList.nodes;
-				sortedProductList.number = 0;
+				delete sortedProductList.nodes;
 				searchProductListByName(productList, sortedProductList, trim(productName));
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isInit = true;
 				isLeftRight = true;
 				isUpDown = true;
@@ -1342,6 +1344,9 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 				sortProductListByName(sortedProductList);
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isInit = true;
 				isLeftRight = true;
 				isUpDown = true;
