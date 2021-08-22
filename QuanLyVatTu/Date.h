@@ -244,3 +244,28 @@ bool isDateBeforeOrSame(Date &date1, Date &date2) {
 	return true;
 }
 
+bool isDateAfter(Date& date1, Date& date2) {
+	if (date1.year < date2.year) {
+	}
+	else if (date1.year == date2.year) {
+		if (date1.month < date2.month) {
+		}
+		else if (date1.month == date2.month) {
+			if (date1.day < date2.day) {
+			}
+			else if (date1.day == date2.day) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+	else {
+		return true;
+	}
+	return false;
+}
