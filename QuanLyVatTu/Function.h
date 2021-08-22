@@ -3243,7 +3243,7 @@ void invoiceDetailListTable(EmployeeList& employeeList, int employeeIndex, Produ
 			if (!isSortedProductListEmpty(sortedProductList))
 			{
 				Product product = sortedProductList.nodes[i + currentIndex].nodeProduct->product;
-				
+
 				//Neu danh sach chi tiet hoa don day va vat tu chua ton tai trong danh sach chi tiet hoa don
 				if (isInvoiceDetailListFull(invoice.invoiceDetailList)
 					&& searchInvoiceDetail(invoice.invoiceDetailList, product.productId) == -1)
@@ -4073,21 +4073,18 @@ int salesTable(ProductList& productList, SalesList& salesList, Date& fromDate, D
 					if (k >= salesList.number) break;
 					else {
 						ix = xPointer;
-						NodeProduct* nodeProduct = searchProduct(productList, salesList.nodes[k].productId);
 
-						gotoXY(ix, iy);
-						int num = cellWidth[0] - 2;
-						cout << std::right << setw(num);
-						cout << (k + 1); ix += cellWidth[0];
+						coutBox(ix, iy, cellWidth[0], TEXT_RIGHT, to_string(k + 1));
+						ix += cellWidth[0];
 
+						coutBox(ix, iy, cellWidth[1], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productId);
+						ix += cellWidth[1];
 
-						gotoXY(ix, iy); cout << " " << salesList.nodes[k].productId; ix += cellWidth[1];
-						gotoXY(ix, iy); cout << " " << nodeProduct->product.productName; ix += cellWidth[2];
+						coutBox(ix, iy, cellWidth[2], TEXT_LEFT, salesList.nodes[k].nodeProduct->product.productName);
+						ix += cellWidth[2];
 
-						gotoXY(ix, iy);
-						num = cellWidth[3] - 2;
-						cout << std::right << setw(num) <<
-							doubleToCurrency(salesList.nodes[k].money); ix += cellWidth[3];
+						coutBox(ix, iy, cellWidth[3], TEXT_RIGHT, doubleToCurrency(salesList.nodes[k].money));
+						ix += cellWidth[3];
 					}
 					iy = iy + 2;
 				}
