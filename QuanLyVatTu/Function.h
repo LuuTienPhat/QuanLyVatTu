@@ -1926,6 +1926,9 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 				sortEmployeeListByName(sortedEmployeeList);
 
 				ShowCur(0);
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isSearch = false;
 				isInit = true;
 				isLeftRight = true;
@@ -1975,6 +1978,10 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 				searchEmployeeListByName(employeeList, sortedEmployeeList, trim(name));
 
 				ShowCur(0);
+
+				i = 0;
+				iOld = i;
+				currentIndex = 0;
 				isInit = true;
 				isLeftRight = true;
 				isUpDown = true;
