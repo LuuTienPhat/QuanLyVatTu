@@ -2654,7 +2654,9 @@ int invoiceDetailListPopUp(Product& product, Invoice& invoice) {
 				if (invoice.type == 'X') {
 					e1 = checkQuantityExport(quantity, trim(newQuantity));
 				}
-				else e1 = checkQuantity(trim(newQuantity));
+				else {
+					e1 = checkQuantityImport(trim(newQuantity));
+				}
 				string e2 = checkPrice(trim(price));
 				string e3 = checkVAT(trim(VAT));
 

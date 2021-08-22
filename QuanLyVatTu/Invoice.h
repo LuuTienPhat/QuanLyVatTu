@@ -82,6 +82,17 @@ string checkQuantityExport(string quantity, string newQuantity) {
 	return "";
 }
 
+//KIEM TRA SO LUONG NHAP
+string checkQuantityImport(string quantity) {
+	if (quantity.empty()) return "SO LUONG NHAP khong duoc de trong";
+
+	if (!is_number(quantity)) return "SO LUONG NHAP phai la so";
+
+	int q = stoi(quantity);
+	if (q <= 0) return "SO LUONG NHAP > 0";
+	return "";
+}
+
 //KIEM TRA GIA
 string checkPrice(string price) {
 	if (price.empty()) return "DON GIA khong duoc de trong";
