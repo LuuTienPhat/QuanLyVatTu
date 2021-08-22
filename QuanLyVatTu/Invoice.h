@@ -213,3 +213,85 @@ string checkType(string type) {
 		return "LOAI HOA DON la 'N' hoac 'X'";
 	return "";
 }
+
+
+
+//==================== THONG KE HOA DON ====================
+
+//SAP XEP DANH SACH THONG KE HOA DON THEO NGAY/THANG/NAM
+void sortStatListByDate(StatList &statList) {
+	
+	for (int i = 0; i < statList.number - 1; i++) {
+		for (int j = 0; j < statList.number - i - 1; j++) {
+			Date d1 = statList.nodes[j].nodeInvoice->invoice.date;
+			Date d2 = statList.nodes[j + 1].nodeInvoice->invoice.date;
+
+			if (isDateAfter(d1, d2)) {
+				swap(statList.nodes[j], statList.nodes[j + 1]);
+			}
+		}
+	}
+}
+
+//TRA VE DANH SACH THONG KE HOA DON
+StatList makeStatList(EmployeeList& employeeList, Date& fromDate, Date& toDate) {
+	//DANH SACH THONG KE HOA DON
+	StatList statList;
+	statList.nodes = new Stat[statList.init];
+
+	for (int i = 0; i < employeeList.number; i++) {
+
+		//LAY DANH SACH HOA DON CUA TUNG NHAN VIEN
+		InvoiceList list = employeeList.employee[i]->invoiceList;
+
+		//DUYET DANH SACH HOA DON DO
+		for (NodeInvoice* p = list; p != NULL; p = p->pNext) {
+			Date d = p->invoice.date;
+
+			//KIEM TRA NGAY LAP HOA DON CO NAM TRONG KHOANG KHONG
+			if (isDateAfterOrSame(d, fromDate) && isDateBeforeOrSame(d, toDate))
+			{
+				//NEU DANH SACH THONG KE DAY
+				if (statList.init == statList.number) {
+					StatList statList2;
+					statList2.init = statList.init;
+					statList2.nodes = new Stat[statList.number];
+					for (int m = 0; m < statList.number; m++) {
+						statList2.nodes[m] = statList.nodes[m];
+						statList2.number++;
+					}
+					delete[] statList.nodes;
+
+					statList.number = 0;
+					statList.init = statList2.init + 100;
+					statList.nodes = new Stat[statList.init];
+					for (int m = 0; m < statList2.number; m++) {
+						statList.nodes[m] = statList2.nodes[m];
+						statList.number++;
+					}
+					delete[] statList2.nodes;
+				}
+
+				statList.nodes[statList.number].index = i;
+				statList.nodes[statList.number].nodeInvoice = p;
+
+				double money = 0;
+				InvoiceDetailList invoiceDetailList = p->invoice.invoiceDetailList;
+
+				//DUYET DANH SACH CHI TIET HOA DON CUA HOA DON DO
+				for (int j = 0; j < invoiceDetailList.number; j++)
+				{
+					InvoiceDetail invoiceDetail = invoiceDetailList.invoiceDetail[j];
+					money += (double)invoiceDetail.quantity * invoiceDetail.price + (invoiceDetail.price * invoiceDetail.quantity * invoiceDetail.VAT / 100);
+				}
+
+				statList.nodes[statList.number].money = money;
+				statList.number++;
+
+			}
+		}
+	}
+
+	sortStatListByDate(statList);
+	return statList;
+}
