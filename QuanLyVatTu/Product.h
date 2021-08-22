@@ -324,7 +324,7 @@ void searchProductListByName(ProductList& productList, NodeIndexList& sortedProd
 //TIM KIEM VAT TU TRONG DANH SACH SALES
 int searchSalesList(SalesList& salesList, string productId) {
 	for (int i = 0; i < salesList.number; i++) {
-		if (salesList.nodes[i].productId.compare(productId) == 0) {
+		if (salesList.nodes[i].nodeProduct->product.productId.compare(productId) == 0) {
 			return i;
 		}
 	}
@@ -371,7 +371,9 @@ SalesList sortProductHasMostSales(ProductList& productList, EmployeeList& employ
 						salesList.nodes[k].money += money;
 					}
 					else { //NEU VAT TU CHUA TON TAI TRONG DANH SACH SALES THI THEM MOI
-						salesList.nodes[salesList.number].productId = invoiceDetail.productId;
+						NodeProduct* np = searchProduct(productList, invoiceDetail.productId);
+						salesList.nodes[salesList.number].nodeProduct = np;
+						//salesList.nodes[salesList.number].productId = invoiceDetail.productId;
 						salesList.nodes[salesList.number].money = money;
 						salesList.number++;
 					}
