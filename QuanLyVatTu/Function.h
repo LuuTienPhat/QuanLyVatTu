@@ -465,6 +465,7 @@ int warningPopUp(string message) {
 		switch (key)
 		{
 		case -32:
+		{
 			isClicked = true;
 			key = _getch();
 			if (key == LEFT && i != 0)
@@ -479,10 +480,13 @@ int warningPopUp(string message) {
 			}
 			key = char();
 			break;
-
+		}
+			
 		case ESC:
+		{
 			return NO;
 			break;
+		}
 
 		case ENTER:
 		{
@@ -490,6 +494,7 @@ int warningPopUp(string message) {
 			if (i == 1) return NO;
 			break;
 		}
+
 		default:
 			break;
 		}
@@ -3669,7 +3674,7 @@ void invoicePopUp(ProductList& productList, EmployeeList& employeeList) {
 
 
 //=================== THONG KE HOA DON TRONG KHOANG THOI GIAN ===================
-int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& fromDate, Date& toDate) {
+int statTable(StatList& statList, EmployeeList& employeeList, Date& fromDate, Date& toDate) {
 	ShowCur(0);
 	string text1 = "BANG LIET KE CAC HOA DON TRONG KHOANG THOI GIAN";
 	string text2 = "TU NGAY: " + dateToString(fromDate) + "  DEN NGAY: " + dateToString(toDate);
@@ -3713,13 +3718,8 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 
 	int xPointer = x + 1;
 	int yPointer = y + 3;
-	int xPointerOld = xPointer;
-	int yPointerOld = yPointer;
-	int i = 0;
-	int iOld = i;
-	bool isLeftRight = true;
-	bool isFromUp = false;
 	bool isInit = true;
+	bool isLeftRight = true;
 
 	while (true) {
 		if (isInit) {
@@ -3738,47 +3738,33 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 			isInit = false;
 		}
 
-		if (statList.number != 0)
-		{
+		if (isLeftRight && statList.number != 0) {
+			int ix;
+			iy = y + 3;
+			for (int k = currentIndex; k < row + currentIndex; k++) {
+				if (k >= statList.number) break;
+				else {
+					ix = xPointer;
+					Stat invoiceStatistics = *statList.nodes[k];
 
-			if (isLeftRight) {
+					coutBox(ix, iy, cellWidth[0], TEXT_LEFT, invoiceStatistics.nodeInvoice->invoice.invoiceNumber);
+					ix += cellWidth[0];
 
-				int ix;
-				iy = y + 3;
-				for (int k = currentIndex; k < row + currentIndex; k++) {
-					if (k >= statList.number) break;
-					else {
-						ix = xPointer;
-						Stat invoiceStatistics = *statList.nodes[k];
+					coutBox(ix, iy, cellWidth[1], TEXT_RIGHT, dateToString(invoiceStatistics.nodeInvoice->invoice.date));
+					ix += cellWidth[1];
 
-						int num = 0;
-						gotoXY(ix, iy); cout << " " << invoiceStatistics.nodeInvoice->invoice.invoiceNumber; ix += cellWidth[0];
+					coutBox(ix, iy, cellWidth[2], TEXT_LEFT, invoiceStatistics.nodeInvoice->invoice.type == 'X' ? "XUAT" : "NHAP");
+					ix += cellWidth[2];
 
-						gotoXY(ix, iy);
-						num = cellWidth[1] - 2;
-						cout << std::right << setw(num);
-						cout << dateToString(invoiceStatistics.nodeInvoice->invoice.date); ix += cellWidth[1];
+					string employeeName = employeeList.employee[invoiceStatistics.index]->lastname + " " + employeeList.employee[invoiceStatistics.index]->firstname;
+					coutBox(ix, iy, cellWidth[3], TEXT_LEFT, employeeName);
+					ix += cellWidth[3];
 
-						gotoXY(ix, iy);
-						cout << " " << (invoiceStatistics.nodeInvoice->invoice.type == 'X' ? "XUAT" : "NHAP");
-						ix += cellWidth[2];
-
-						gotoXY(ix, iy);
-						cout << " " << employeeList.employee[invoiceStatistics.index]->lastname + " " + employeeList.employee[invoiceStatistics.index]->firstname; ix += cellWidth[3];
-
-						gotoXY(ix, iy);
-						num = cellWidth[4] - 2;
-						cout << std::right << setw(num);
-						cout << doubleToCurrency(invoiceStatistics.money); ix += cellWidth[4];
-					}
-					iy = iy + 2;
+					coutBox(ix, iy, cellWidth[4], TEXT_RIGHT, doubleToCurrency(invoiceStatistics.money));
+					ix += cellWidth[4];
 				}
+				iy = iy + 2;
 			}
-
-			i = 0;
-			iOld = i;
-			yPointer = y + 3;
-			yPointerOld = yPointer;
 			isLeftRight = false;
 		}
 
@@ -3793,14 +3779,14 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 				if (key == LEFT && currentIndex != 0)
 				{
 					currentIndex -= row;
+					isInit = true;
 					isLeftRight = true;
 				}
 				else if (key == RIGHT && (currentIndex + row) <= statList.number - 1) {
 					currentIndex += row;
+					isInit = true;
 					isLeftRight = true;
 				}
-				else if (key == UP) {}
-				else if (key == DOWN) {}
 			}
 			break;
 		}
@@ -3821,7 +3807,7 @@ int statisticialTable(StatList& statList, EmployeeList& employeeList, Date& from
 	}
 }
 
-void statisticialPopUp(EmployeeList& employeeList) {
+void statPopUp(EmployeeList& employeeList) {
 	ShowCur(1);
 	int height = HEIGHT_POP_UP;
 	int width = WIDTH_POP_UP;
@@ -3978,10 +3964,10 @@ void statisticialPopUp(EmployeeList& employeeList) {
 					}
 
 					clearConsole();
-					int k = statisticialTable(statList, employeeList, fromDate, toDate);
+					int k = statTable(statList, employeeList, fromDate, toDate);
 					if (k == 1) {
 						clearConsole();
-						statisticialPopUp(employeeList);
+						statPopUp(employeeList);
 					}
 					c = ESC; i--;
 				}
@@ -4320,7 +4306,7 @@ void menu(boolean isInit) {
 			else if (i == 4) { //THONG KE HOA DON
 				setBackgroundColor(COLOR_BLACK);
 				clearConsole();
-				statisticialPopUp(employeeList);
+				statPopUp(employeeList);
 			}
 
 			else if (i == 5) { //TOP DOANH THU
