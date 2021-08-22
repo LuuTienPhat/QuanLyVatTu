@@ -149,7 +149,6 @@ struct NodeIndexList { //DANH SACH TUYEN TINH CAP PHAT DONG
 };
 
 //==================== THONG KE DANH SACH HOA DON ====================
-const int  MAX_STAT_LIST = 1000;
 
 struct Stat { 
 	NodeInvoice* nodeInvoice; //giu dia chi cua node hoa don
@@ -159,7 +158,8 @@ struct Stat {
 
 struct StatList {
 	int number = 0;
-	Stat* nodes[MAX_STAT_LIST];
+	int init = 100; //khoi tao ban dau
+	Stat* nodes;
 };
 
 
