@@ -1219,9 +1219,9 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 
 					//NEU VAT TU DA XUAT HIEN TRONG DANH SACH HOA DON HOAC CO SO LUONG TON > 0
 					if ((p->product.isUsed) || (p->product.quantity > 0)) {
-						string message = "KHONG THE XOA VAT TU NAY.";
+						string message = "KHONG THE XOA VAT TU NAY";
 						int k = notificationPopUp(message);
-						if (k == 0) {} //NHAN OK
+						if (k == YES) {} //NHAN OK
 					}
 					else { //TRUONG HOP CON LAI THI XOA DUOC VAT TU
 						deleteProduct(productList, p->product.productId);
@@ -2645,7 +2645,7 @@ int invoiceDetailListPopUp(Product& product, Invoice& invoice) {
 			break;
 		}
 
-		case ENTER: //THEM VAT TU VAO DANH SACH CHI TIET HOA DON
+		case ENTER: //THEM / SUA VAT TU VAO DANH SACH CHI TIET HOA DON
 			if (i == number) {
 				box(xPointer, y + height - 6, widthInput, 5, COLOR_RED, COLOR_LIGHT_YELLOW, "", TEXT_CENTER);
 
@@ -2669,13 +2669,16 @@ int invoiceDetailListPopUp(Product& product, Invoice& invoice) {
 
 				//NEU KHONG CO LOI NAO THI THEM VAO DANH SACH CHI TIET HOA DON
 				if (e1.empty() && e2.empty() && e3.empty()) {
+
+					//TIM VAT TU TRONG DANH SACH CHI TIET HOA DON
 					int index = searchInvoiceDetail(invoice.invoiceDetailList, productId);
-					if (index == -1) {
+
+					if (index == -1) {//NEU VAT TU CHUA TON TAI THI THEM VAO
 						InvoiceDetail invoiceDetail;
 						newInvoiceDetail(invoiceDetail, productId, stoi(trim(newQuantity)), stof(trim(price)), stof(trim(VAT)));
 						insertInvoiceDetail(invoice.invoiceDetailList, invoiceDetail);
 					}
-					else {
+					else { //NEU VAT TU DA TON TAI THI CAP NHAT LAI CAC GIA TRI
 						invoice.invoiceDetailList.invoiceDetail[index].quantity = stoi(trim(newQuantity));
 						invoice.invoiceDetailList.invoiceDetail[index].price = stof(trim(price));
 						invoice.invoiceDetailList.invoiceDetail[index].VAT = stof(trim(VAT));
