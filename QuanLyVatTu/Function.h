@@ -1226,7 +1226,10 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 					if ((p->product.isUsed) || (p->product.quantity > 0)) {
 						string message = "KHONG THE XOA VAT TU NAY";
 						int k = notificationPopUp(message);
-						if (k == YES) {} //NHAN OK
+						if (k == YES) { //NHAN OK
+							clearConsole();
+							productTable(productList, sortedProductList, isSearch);
+						}
 					}
 					else { //TRUONG HOP CON LAI THI XOA DUOC VAT TU
 						deleteProduct(productList, p->product.productId);
@@ -1236,22 +1239,19 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 						sortProductListByName(sortedProductList);
 
 						writeProductFile(productList);
+						clearConsole();
+						productTable(productList, sortedProductList, false);
 					}
-
-					clearConsole();
-					productTable(productList, sortedProductList, false);
 				}
-				else {
-					clearConsole();
-					productTable(productList, sortedProductList, isSearch);
-				}
+				clearConsole();
+				productTable(productList, sortedProductList, isSearch);
 			}
 
 			//THEM VAT TU DANH SACH VAT VAT TU
 			else if (key == INSERT_KEY) {
 
-				//Khi danh sach vat tu theo ten day 
-				// ==> tien hanh cap phat lai
+				//KHI DANH SACH VAT TU THEO TEN DAY
+				// ==> TIEN HANH CAP PHAT LAI
 				if (sortedProductList.init == sortedProductList.number)
 				{
 					delete[] sortedProductList.nodes;
@@ -1259,16 +1259,19 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 					sortProductListByName(sortedProductList);
 				}
 
+				//MO BANG THEM VAT TU
 				int k = addProductPopUp(productList, sortedProductList);
-				if (k == YES) {  //DA CHINH SUA VAT TU
+
+				if (k == YES) {  //DA THEM VAT TU
 					clearConsole();
 					productTable(productList, sortedProductList, false);
 				}
-				else {
+				else { //NHAN ESC
 					clearConsole();
 					productTable(productList, sortedProductList, isSearch);
 				}
 			}
+
 			break;
 		}
 
@@ -1278,15 +1281,16 @@ void productTable(ProductList& productList, NodeIndexList& sortedProductList, bo
 			{
 				NodeProduct* p = sortedProductList.nodes[i + currentIndex].nodeProduct;
 
+				//MO BANG HIEU CHINH VAT TU
 				int k = editProductPopUp(productList, p->product, sortedProductList);
 
 				if (k == NO) { //NEU AN ESC
 					clearConsole();
 					productTable(productList, sortedProductList, isSearch);
 				}
-				else {
+				else { //DA CHINH SUA
 					clearConsole();
-					productTable(productList, sortedProductList, false);
+					productTable(productList, sortedProductList, isSearch);
 				}
 			}
 			break;
@@ -1862,11 +1866,14 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 				if (isEmployeeListFull(employeeList)) { //DANH SACH NHAN VIEN DA DAY
 					string message = "DANH SACH NHAN VIEN DA DAY";
 					int k = notificationPopUp(message);
-					if (k == YES) {}
+					if (k == YES) {
+						clearConsole();
+						employeeTable(employeeList, sortedEmployeeList, isSearch);
+					}
 				}
 				else { //DANH SACH NHAN VIEN CHUA DAY
 					int k = addEmployeePopUp(employeeList);
-					if (k == YES) {
+					if (k == YES) { //DA THEM NHAN VIEN
 						delete[] sortedEmployeeList.nodes;
 						employeeListToEmployeeIndexList(employeeList, sortedEmployeeList);
 						sortEmployeeListByName(sortedEmployeeList);
@@ -1874,26 +1881,31 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 						clearConsole();
 						employeeTable(employeeList, sortedEmployeeList, false);
 					}
+					else { // NHAN ESC
+						clearConsole();
+						employeeTable(employeeList, sortedEmployeeList, isSearch);
+					}
 				}
-
-				clearConsole();
-				employeeTable(employeeList, sortedEmployeeList, isSearch);
 			}
 
 			//XOA NHAN VIEN
 			else if (key == DELETE_KEY && !isSortedEmployeeListEmpty(sortedEmployeeList))
 			{
 				string message = "BAN MUON XOA NHAN VIEN NAY?";
-				bool isAccepted = warningPopUp(message);
+				int isAccepted = warningPopUp(message);
 				int index = sortedEmployeeList.nodes[i + currentIndex].index;
-				if (isAccepted)
+				if (isAccepted == YES) //NEU DONG Y XOA
 				{
-					if (isEmployeeHasInvoiceList(*employeeList.employee[index])) {
+					//KIEM TRA XEM NHAN VIEN DA LAP HOA DON HAY CHUA?
+					if (!isInvoiceListEmpty(employeeList.employee[index]->invoiceList)) {
 						string message = "NHAN VIEN NAY DA LAP HOA DON, KHONG XOA DUOC.";
 						int t = notificationPopUp(message);
-						if (t == YES) {};
+						if (t == YES) {
+							clearConsole();
+							employeeTable(employeeList, sortedEmployeeList, isSearch);
+						}
 					}
-					else {
+					else { //NEU NHAN VIEN CHUA LAP HOA DON
 						deleteEmployee(employeeList, employeeList.employee[index]->employeeId);
 						writeEmployeeFile(employeeList);
 
@@ -1901,13 +1913,16 @@ void employeeTable(EmployeeList& employeeList, IndexList& sortedEmployeeList, bo
 						employeeListToEmployeeIndexList(employeeList, sortedEmployeeList);
 						sortEmployeeListByName(sortedEmployeeList);
 
+						writeEmployeeFile(employeeList);
 						clearConsole();
 						employeeTable(employeeList, sortedEmployeeList, false);
 					}
 				}
-				writeEmployeeFile(employeeList);
-				clearConsole();
-				employeeTable(employeeList, sortedEmployeeList, isSearch);
+				else { //NEU KHONG DONG Y XOA
+					clearConsole();
+					employeeTable(employeeList, sortedEmployeeList, isSearch);
+				}
+
 			}
 
 			break;
@@ -2383,7 +2398,7 @@ void addInvoicePopUp(ProductList& productList, EmployeeList& employeeList, int e
 			clearConsole();
 
 			employeeIndex = employeeTableByName(employeeList, sortedEmployeeList, false);
-			
+
 			clearConsole();
 			addInvoicePopUp(productList, employeeList, employeeIndex);
 			break;
@@ -3667,7 +3682,7 @@ int statTable(StatList& statList, EmployeeList& employeeList, Date& fromDate, Da
 				if (k >= statList.number) break;
 				else {
 					ix = xPointer;
-					Stat invoiceStatistics = *statList.nodes[k];
+					Stat invoiceStatistics = statList.nodes[k];
 
 					coutBox(ix, iy, cellWidth[0], TEXT_LEFT, invoiceStatistics.nodeInvoice->invoice.invoiceNumber);
 					ix += cellWidth[0];
@@ -3714,12 +3729,8 @@ int statTable(StatList& statList, EmployeeList& employeeList, Date& fromDate, Da
 		}
 		case ESC:
 		{
-			for (int i = 0; i < statList.number; i++)
-			{
-				delete statList.nodes[i];
-			}
-			statList.number = 0;
-			return 1;
+			delete[] statList.nodes;
+			return NO;
 			break;
 		}
 
@@ -3739,11 +3750,11 @@ void statPopUp(EmployeeList& employeeList) {
 	int widthInput = 36;
 	const int number = 2;
 
-	/*string startDateString = "01/01/2000";
-	string endDateString = "31/12/2000";*/
+	string startDateString = "01/01/2021";
+	string endDateString = "31/12/2021";
 
-	string startDateString = "";
-	string endDateString = "";
+	/*string startDateString = "";
+	string endDateString = "";*/
 
 	string title[number] = { "NGAY BAT DAU", "NGAY KET THUC" };
 
@@ -3841,53 +3852,11 @@ void statPopUp(EmployeeList& employeeList) {
 					Date fromDate = stringToDate(startDateString);
 					Date toDate = stringToDate(endDateString);
 
-					//DANH SACH THONG KE HOA DON
-					StatList statList;
-					for (int i = 0; i < employeeList.number; i++) {
-
-						//LAY DANH SACH HOA DON CUA TUNG NHAN VIEN
-						InvoiceList list = employeeList.employee[i]->invoiceList;
-
-						//DUYET DANH SACH HOA DON DO
-						for (NodeInvoice* p = list; p != NULL; p = p->pNext) {
-							Date d = p->invoice.date;
-
-							//KIEM TRA NGAY LAP HOA DON CO NAM TRONG KHOANG KHONG
-							if (isDateAfterOrSame(d, fromDate) && isDateBeforeOrSame(d, toDate))
-							{
-								statList.nodes[statList.number] = new Stat;
-								statList.nodes[statList.number]->index = i;
-								statList.nodes[statList.number]->nodeInvoice = p;
-
-								double money = 0;
-								InvoiceDetailList invoiceDetailList = p->invoice.invoiceDetailList;
-
-								//DUYET DANH SACH CHI TIET HOA DON CUA HOA DON DO
-								for (int j = 0; j < invoiceDetailList.number; j++)
-								{
-									InvoiceDetail invoiceDetail = invoiceDetailList.invoiceDetail[j];
-									money += (double)invoiceDetail.quantity * invoiceDetail.price + (invoiceDetail.price * invoiceDetail.quantity * invoiceDetail.VAT / 100);
-								}
-								statList.nodes[statList.number]->money = money;
-								statList.number++;
-							}
-						}
-					}
-
-					for (int i = 0; i < statList.number - 1; i++) {
-						for (int j = 0; j < statList.number - i - 1; j++) {
-							Date d1 = statList.nodes[j]->nodeInvoice->invoice.date;
-							Date d2 = statList.nodes[j + 1]->nodeInvoice->invoice.date;
-
-							if (isDateAfterOrSame(d1, d2)) {
-								swap(statList.nodes[j], statList.nodes[j + 1]);
-							}
-						}
-					}
-
+					StatList statList = makeStatList(employeeList, fromDate, toDate);
+					
 					clearConsole();
 					int k = statTable(statList, employeeList, fromDate, toDate);
-					if (k == 1) {
+					if (k == NO) {
 						clearConsole();
 						statPopUp(employeeList);
 					}
