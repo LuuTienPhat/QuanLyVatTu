@@ -1,9 +1,5 @@
 # Quản Lý Vật Tư
 
-Giảng viên: **Lưu Nguyễn Kỳ Thư**
-
-Thực hiện: **Lưu Tiến Phát**
-
 Email: **luutienphat@gmail.com**
 
 **08/2021**
