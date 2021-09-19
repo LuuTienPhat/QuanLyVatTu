@@ -1,32 +1,38 @@
-# Quản Lý Vật Tư
+# Product Manager 
+### Quản Lý Vật Tư
 
 Email: **luutienphat@gmail.com**
 
 **08/2021**
 
-## Hình ảnh
+## Language, Data Structure:
+  * C++ 11
+  * Linked List, Binary Search Tree
+  * Windows API support C++
 
-**1. Trang Menu**
+## Preview Images
+
+**1. Menu page**
 
   ![Menu_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Menu-Page.png?raw=true)
   
-**2. Trang Vật Tư**
+**2. Product page**
   
   ![Product_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Product-Page.png?raw=true)
   
-**3. Trang Nhân Viên**
+**3. Employee page**
 
   ![Employee_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Employee-Page.png?raw=true)
   
-**4. Trang Lập Hoá Đơn**
+**4. Create Invoice page**
 
   ![Make_Invoice_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Make-Invoice-Page.png?raw=true)
   
-**5. Trang Xem Hoá Đơn**
+**5. View Invoice page**
 
   ![Show_Invoice_Page](https://github.com/luutienphat/QuanLyVatTu/blob/master/Images/Show-Invoice-Page.png?raw=true)
 
-## Đề bài
+## Topic
 
   Quản lý nhập xuất vật tư: Ta tổ chức các danh sách sau:
   
@@ -63,4 +69,11 @@ Email: **luutienphat@gmail.com**
    h. **In 10 vật tư có doanh thu cao nhất trong 1 khoảng thời gian.**
    
    **Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra các điều kiện khi nhập làm dữ liệu bị sai.**
+   
+## Tool
+  * IDE: Visual Studio 2019
+
+## Warning
+  I used some Windows API to design and create the UI, so it may only run perfectly on Windows, another plattorms may would not run.
+  Information about these API can see here: https://docs.microsoft.com/en-us/windows/win32/api/winbase/
 
